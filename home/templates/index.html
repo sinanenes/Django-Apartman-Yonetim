@@ -1,15 +1,9 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Ilk Django Sayfasi</title>
-</head>
-<body>
+{% extends 'homebase.html' %}
 
-<h1>Hos geldin Django</h1>
-<h3>Ahmet Yesevi Universitesi Bilgisayar Muhendisligi Bolumu</h3>
-<p>
-    {{text | safe}}
-</p>
-</body>
-</html>
+{% block title %}Index Sayfası{% endblock %}
+{% block keywords %}Index Sayfası Anahtar Kelimeler{% endblock %}
+{% block description %}Index Sayfası Açıklama{% endblock %}
+
+{% block sidebar %}{% include 'sidebar.html' %}{% endblock %}
+{% block slider %}{% include 'slider.html' %}{% endblock %}
+{% block content %}{% include 'content.html' %}{% endblock %}
