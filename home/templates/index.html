@@ -1,9 +1,13 @@
 {% extends 'homebase.html' %}
 
-{% block title %}Index Sayfası{% endblock %}
-{% block keywords %}Index Sayfası Anahtar Kelimeler{% endblock %}
-{% block description %}Index Sayfası Açıklama{% endblock %}
+{% block title %} {{ setting.title }} {% endblock %}
+{% block keywords %} {{ setting.keywords }} {% endblock %}
+{% block description %} {{ setting.description }} {% endblock %}
 
-{% block sidebar %}{% include 'sidebar.html' %}{% endblock %}
-{% block slider %}{% include 'slider.html' %}{% endblock %}
-{% block content %}{% include 'content.html' %}{% endblock %}
+{% block head %}
+    <link rel="shortcut icon" type="image/x-icon" href="{{ setting.icon.url }}">
+{% endblock %}
+
+{% block sidebar %} {% include 'sidebar.html' %} {% endblock %}
+{% block slider %} {% include 'slider.html' %} {% endblock %}
+{% block content %} {% include 'content.html' %} {% endblock %}
