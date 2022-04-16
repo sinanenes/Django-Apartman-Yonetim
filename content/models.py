@@ -2,6 +2,9 @@ from django.db import models
 
 
 # Create your models here.
+from django.utils.safestring import mark_safe
+
+
 class Menu(models.Model):
     STATUS = (
         ('True', 'Evet'),
@@ -19,6 +22,11 @@ class Menu(models.Model):
 
     def __str__(self):
         return self.title
+
+    def image_tag(self):
+        if self.image:
+            return mark_safe('<img src="{}" height="50"/>'.format(self.image.url))
+    image_tag.short_description = 'Image'
 
 
 class Content(models.Model):
@@ -50,6 +58,11 @@ class Content(models.Model):
     def __str__(self):
         return self.title
 
+    def image_tag(self):
+        if self.image:
+            return mark_safe('<img src="{}" height="50"/>'.format(self.image.url))
+    image_tag.short_description = 'Image'
+
 
 class Imagen(models.Model):
     content = models.ForeignKey(Content, on_delete=models.CASCADE)  # relation with Content table
@@ -58,3 +71,8 @@ class Imagen(models.Model):
 
     def __str__(self):
         return self.title
+
+    def image_tag(self):
+        if self.image:
+            return mark_safe('<img src="{}" height="50"/>'.format(self.image.url))
+    image_tag.short_description = 'Image'

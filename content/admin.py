@@ -10,19 +10,22 @@ class ContentImagenInline(admin.TabularInline):
 
 
 class MenuAdmin(admin.ModelAdmin):
-    list_display = ['title', 'status']
+    list_display = ['title', 'status', 'image_tag']
     list_filter = ['status']
+    readonly_fields = ('image_tag',)
 
 
 class ContentAdmin(admin.ModelAdmin):
-    list_display = ['title', 'menu', 'type', 'status']
+    list_display = ['title', 'menu', 'type', 'image_tag', 'status']
     list_filter = ['status', 'menu']
     inlines = [ContentImagenInline]
+    readonly_fields = ('image_tag',)
 
 
 class ImagenAdmin(admin.ModelAdmin):
-    list_display = ['title', 'content', 'image']
+    list_display = ['title', 'content', 'image_tag']
     list_filter = ['content']
+    readonly_fields = ('image_tag',)
 
 
 admin.site.register(Menu, MenuAdmin)
