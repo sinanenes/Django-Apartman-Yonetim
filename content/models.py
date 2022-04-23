@@ -1,8 +1,8 @@
 from django.db import models
 
-
 # Create your models here.
 from django.utils.safestring import mark_safe
+from ckeditor_uploader.fields import RichTextUploadingField
 
 
 class Menu(models.Model):
@@ -26,6 +26,7 @@ class Menu(models.Model):
     def image_tag(self):
         if self.image:
             return mark_safe('<img src="{}" height="50"/>'.format(self.image.url))
+
     image_tag.short_description = 'Image'
 
 
@@ -46,7 +47,8 @@ class Content(models.Model):
     description = models.CharField(max_length=255)
     image = models.ImageField(blank=True, upload_to='images/')
     menu = models.ForeignKey(Menu, on_delete=models.CASCADE)  # relation with Menu table
-    detail = models.TextField()
+    # detail = models.TextField()
+    detail = RichTextUploadingField()
     type = models.CharField(max_length=10, choices=TYPE)
     # file ve videolink field eklenecek...
     slug = models.SlugField()
@@ -61,6 +63,7 @@ class Content(models.Model):
     def image_tag(self):
         if self.image:
             return mark_safe('<img src="{}" height="50"/>'.format(self.image.url))
+
     image_tag.short_description = 'Image'
 
 
@@ -75,4 +78,5 @@ class Imagen(models.Model):
     def image_tag(self):
         if self.image:
             return mark_safe('<img src="{}" height="50"/>'.format(self.image.url))
+
     image_tag.short_description = 'Image'
