@@ -1,7 +1,9 @@
+from django.contrib import messages
+from django.http import HttpResponseRedirect
 from django.shortcuts import render
 
 # Create your views here.
-from home.models import Setting
+from home.models import Setting, ContactFormu, ContactFormMessage
 
 
 def index(request):
@@ -26,7 +28,22 @@ def referanslar(request):
 
 
 def iletisim(request):
-    # setting = Setting.objects.all()
+    if request.method == 'POST':  # form post edildiyse
+        form = ContactFormu(request.POST)
+        if form.is_valid():
+            data = ContactFormMessage()  # model ile baglanti
+            data.name = form.cleaned_data['name']  # formdan bilgi al
+            data.email = form.cleaned_data['email']
+            data.subject = form.cleaned_data['subject']
+            data.message = form.cleaned_data['message']
+            data.ip = request.META.get('REMOTE_ADDR')
+            data.save()  # veritabanina kaydet
+            messages.success(request, "Mesajınız başarıyla gönderilmiştir. Teşekkür Ederiz.")
+            return HttpResponseRedirect('/iletisim')
+
     setting = Setting.objects.get(pk=1)
-    context = {'setting': setting, 'page': 'iletisim'}
+    # setting = Setting.objects.all()
+    form = ContactFormu()
+    context = {'setting': setting, 'form': form}
+    # context = {'setting': setting, 'page': 'iletisim'}
     return render(request, 'iletisim.html', context)
