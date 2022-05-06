@@ -3,7 +3,7 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import render
 
 # Create your views here.
-from content.models import Content
+from content.models import Content, Menu
 from home.models import Setting, ContactFormu, ContactFormMessage
 
 
@@ -11,7 +11,9 @@ def index(request):
     # setting = Setting.objects.all()
     setting = Setting.objects.get(pk=1)
     sliderdata = Content.objects.all()[:4]
+    menu = Menu.objects.all()
     context = {'setting': setting,
+               'menu': menu,
                'page': 'home',
                'sliderdata': sliderdata}
     return render(request, 'index.html', context)
