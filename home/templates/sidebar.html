@@ -57,7 +57,7 @@
             {% recursetree menu %}
             <!--<li><a class="dropdown-item" href="#"> {{ node.name }} </a></li>-->
             <li>
-                <a class="dropdown-item" {% if node.is_leaf_node %} href="/menu/{{ node.slug }}" {% endif %}>
+                <a class="dropdown-item" {% if node.is_leaf_node %} href="/menu/{{ node.id }}/{{ node.slug }}" {% endif %}>
                     {{node.title}}{% if not node.is_leaf_node %}&raquo{% endif %}
                 </a>
                 {% if not node.is_leaf_node %}

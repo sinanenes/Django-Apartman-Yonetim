@@ -22,14 +22,16 @@ def index(request):
 def hakkimizda(request):
     # setting = Setting.objects.all()
     setting = Setting.objects.get(pk=1)
-    context = {'setting': setting, 'page': 'hakkimizda'}
+    menu = Menu.objects.all()
+    context = {'setting': setting, 'menu': menu, 'page': 'hakkimizda'}
     return render(request, 'hakkimizda.html', context)
 
 
 def referanslar(request):
     # setting = Setting.objects.all()
     setting = Setting.objects.get(pk=1)
-    context = {'setting': setting, 'page': 'referanslar'}
+    menu = Menu.objects.all()
+    context = {'setting': setting, 'menu': menu, 'page': 'referanslar'}
     return render(request, 'referanslar.html', context)
 
 
@@ -50,6 +52,18 @@ def iletisim(request):
     setting = Setting.objects.get(pk=1)
     # setting = Setting.objects.all()
     form = ContactFormu()
-    context = {'setting': setting, 'form': form}
+    menu = Menu.objects.all()
+    context = {'setting': setting, 'menu': menu, 'form': form}
     # context = {'setting': setting, 'page': 'iletisim'}
     return render(request, 'iletisim.html', context)
+
+
+def menu_contents(request, id, slug):
+    contents = Content.objects.filter(menu_id=id)
+    menudata = Menu.objects.get(pk=id)
+    menu = Menu.objects.all()
+    context = {'contents': contents,
+               'menu': menu,
+               'menudata': menudata
+               }
+    return render(request, 'contents.html', context)
