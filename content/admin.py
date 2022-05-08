@@ -3,7 +3,7 @@ from django.contrib import admin
 # Register your models here.
 from mptt.admin import MPTTModelAdmin, DraggableMPTTAdmin
 
-from content.models import Menu, Content, Imagen
+from content.models import Menu, Content, Imagen, Comment
 
 
 class ContentImagenInline(admin.TabularInline):
@@ -66,8 +66,14 @@ class CategoryAdminTree(DraggableMPTTAdmin):
     related_contents_cumulative_count.short_description = 'Related contents (in tree)'
 
 
+class CommentAdmin(admin.ModelAdmin):
+    list_display = ['subject', 'comment', 'content', 'user', 'status']
+    list_filter = ['status']
+
+
 # admin.site.register(Menu, MenuAdmin)
 # admin.site.register(Menu, MPTTModelAdmin)
 admin.site.register(Menu, CategoryAdminTree)
 admin.site.register(Content, ContentAdmin)
 admin.site.register(Imagen, ImagenAdmin)
+admin.site.register(Comment, CommentAdmin)

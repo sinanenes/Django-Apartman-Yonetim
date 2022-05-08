@@ -3,7 +3,7 @@ from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render
 
 # Create your views here.
-from content.models import Content, Menu, Imagen
+from content.models import Content, Menu, Imagen, Comment
 from home.models import Setting, ContactFormu, ContactFormMessage
 
 
@@ -52,7 +52,7 @@ def iletisim(request):
             data.message = form.cleaned_data['message']
             data.ip = request.META.get('REMOTE_ADDR')
             data.save()  # veritabanina kaydet
-            messages.success(request, "Mesajınız başarıyla gönderilmiştir. Teşekkür Ederiz.")
+            messages.success(request, "Mesajınız Başarıyla Gönderilmiştir. Teşekkür Ederiz.")
             return HttpResponseRedirect('/iletisim')
 
     setting = Setting.objects.get(pk=1)
@@ -79,10 +79,12 @@ def content_detail(request, id, slug):
     menu = Menu.objects.all()
     content = Content.objects.get(pk=id)
     imagens = Imagen.objects.filter(content_id=id)
+    comments = Comment.objects.filter(content_id=id, status='True')
     # menudata = Menu.objects.get(pk=content.menu_id)
     context = {'content': content,
                'menu': menu,
-               'imagens': imagens
+               'imagens': imagens,
+               'comments': comments
                # 'menudata': menudata
                }
     return render(request, 'content_detail.html', context)

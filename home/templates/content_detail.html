@@ -99,6 +99,7 @@
                             </div>
                         </div>
                     </div>
+
                     <!--<div class="blog-post">
                         <div class="row">
                             <div class="col-lg-5 col-md-6">
@@ -126,42 +127,251 @@
                                 </a>
                             </div>
                         </div>
-                    </div>
-                    <div class="posted-by">
-                        <div class="pb-pic">
-                            <img src="img/blog/post-by.png" alt="">
-                        </div>
-                        <div class="pb-text">
-                            <a href="#">
-                                <h5>Shane Lynch</h5>
-                            </a>
-                            <p>Aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
-                                velit esse cillum bore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
-                                amodo</p>
-                        </div>
                     </div>-->
-                    <!--                    <div class="leave-comment">
-                                            <h4>Leave A Comment</h4>
-                                            <form action="#" class="comment-form">
-                                                <div class="row">
-                                                    <div class="col-lg-6">
-                                                        <input type="text" placeholder="Name">
-                                                    </div>
-                                                    <div class="col-lg-6">
-                                                        <input type="text" placeholder="Email">
-                                                    </div>
-                                                    <div class="col-lg-12">
-                                                        <textarea placeholder="Messages"></textarea>
-                                                        <button type="submit" class="site-btn">Send message</button>
+                    <div class="row">
+                        <div class="posted-by col-lg-6">
+                            <h4>YORUMLAR</h4>
+                            <hr>
+                            {% for rs in comments %}
+                            <div class="pb-pic">
+                                <img src="{% static 'img/blog/post-by.png' %}" alt="">
+                            </div>
+                            <div class="pb-text">
+                                <a href="#">
+                                    <h5><i class="fa fa-user-o"></i> {{ rs.user.username }}</h5>
+                                </a>
+                                <b>{{ rs.subject }}</b>
+                                <p>{{ rs.comment }}</p>
+                                <b>{{ rs.rate }} ☆</b>
+                                <h6><i class="fa fa-clock-o"></i> {{ rs.create_at}}</h6>
+                                <hr>
+                            </div>
+                            {% endfor %}
+                        </div>
+
+                        <div class="leave-comment col-lg-6">
+                            <h4>YORUM EKLE</h4>
+
+                            {% if messages %}
+                            {% for message in messages %}
+                            <div class="alert alert-{{message.tags}}" role="alert">
+                                {{ message }}
+                            </div>
+                            {% endfor %}
+                            {% endif %}
+
+                            <form action="/content/addcomment/{{ content.id }}" method="POST" class="comment-form">
+                                {% csrf_token %}
+                                <div class="row">
+
+                                    <div class="col-lg-6">
+                                        <input type="text" placeholder="Name">
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <input type="text" placeholder="Email">
+                                    </div>
+                                    <div class="col-lg-12">
+                                        <input type="text" name="subject" placeholder="Konu" id="id_subject">
+                                    </div>
+                                    <div class="col-lg-12">
+                                        <textarea name="comment" placeholder="Yorum" id="id_comment"></textarea>
+                                        <div class="col-lg-12">
+                                            <div class="row">
+                                                <!--<div class="col-lg-9">
+                                                    <button type="submit" class="site-btn">GÖNDER</button>
+                                                    </div>-->
+                                                <div class="col-lg-3">
+                                                    <div class="rate bg-lights py-3 text-white mt-3"
+                                                         style="width:180px">
+                                                        <!--<h6 class="mb-0">Oy Ver</h6>
+                                                         <strong class="text-uppercase">Oy Ver</strong>-->
+                                                        <div class="rating">
+                                                            <input type="radio" name="rate" value="5" id="5"><label
+                                                                for="5">☆</label>
+                                                            <input type="radio" name="rate" value="4" id="4"><label
+                                                                for="4">☆</label>
+                                                            <input type="radio" name="rate" value="3" id="3"><label
+                                                                for="3">☆</label>
+                                                            <input type="radio" name="rate" value="2" id="2"><label
+                                                                for="2">☆</label>
+                                                            <input type="radio" name="rate" value="1" id="1"><label
+                                                                for="1">☆</label>
+                                                        </div>
+                                                        <!-- <div class="buttons px-4 mt-0">
+                                                             &lt;!&ndash;
+                                                             <button class="btn btn-warning btn-block rating-submit">
+                                                             Onayla</button>&ndash;&gt;
+                                                             <button class="primary-btn">OY VER</button>
+                                                             </div>-->
                                                     </div>
                                                 </div>
-                                            </form>
-                                        </div>-->
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="buttons px-4 mt-0">
+                                        {% if user.id is not None %}
+                                        <!--<button class="btn btn-warning btn-block rating-submit">Onayla</button>-->
+                                        <button class="primary-btn">GÖNDER</button>
+                                        {% else %}
+                                        Yorum Eklemek İçin <a href="/login"> Login </a> Olunuz!
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
                 </div>
             </div>
         </div>
     </div>
 </section>
 <!-- Blog Details Section End -->
+
+<style type="text/css">
+body{
+
+	background-color: #f7f6f6;
+}
+
+.card{
+
+	width: 350px;
+	border: none;
+	box-shadow: 5px 6px 6px 2px #e9ecef;
+	border-radius: 12px;
+}
+
+.circle-image img{
+
+	border: 6px solid #fff;
+    border-radius: 100%;
+    padding: 0px;
+    top: -28px;
+    position: relative;
+    width: 70px;
+    height: 70px;
+    border-radius: 100%;
+    z-index: 1;
+    background: #e7d184;
+    cursor: pointer;
+
+}
+
+
+.dot {
+    height: 18px;
+    width: 18px;
+    background-color: blue;
+    border-radius: 50%;
+    display: inline-block;
+    position: relative;
+    border: 3px solid #fff;
+    top: -48px;
+    left: 186px;
+    z-index: 1000;
+}
+
+.name{
+	margin-top: -21px;
+	font-size: 18px;
+}
+
+
+.fw-500{
+	font-weight: 500 !important;
+}
+
+
+.start{
+
+	color: green;
+}
+
+.stop{
+	color: red;
+}
+
+
+.rate{
+
+	border-bottom-right-radius: 12px;
+	border-bottom-left-radius: 12px;
+
+}
+
+
+
+.rating {
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: center
+}
+
+.rating>input {
+    display: none
+}
+
+.rating>label {
+    position: relative;
+    width: 1em;
+    font-size: 30px;
+    font-weight: 300;
+    color: #FFD600;
+    cursor: pointer
+}
+
+.rating>label::before {
+    content: "\2605";
+    position: absolute;
+    opacity: 0
+}
+
+.rating>label:hover:before,
+.rating>label:hover~label:before {
+    opacity: 1 !important
+}
+
+.rating>input:checked~label:before {
+    opacity: 1
+}
+
+.rating:hover>input:checked~label:before {
+    opacity: 0.4
+}
+
+
+.buttons{
+	top: 0px;
+	left: 10px;
+    position: relative;
+}
+
+
+.rating-submit{
+	border-radius: 15px;
+	color: #fff;
+	height: 49px;
+}
+
+
+.rating-submit:hover{
+
+	color: #fff;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+</style>
+
 
 {% endblock %}
