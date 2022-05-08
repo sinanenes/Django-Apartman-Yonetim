@@ -1,0 +1,41 @@
+<!-- Man Banner Section Begin -->
+<section class="man-banner spad">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-8">
+                <div class="filter-control">
+                    <ul>
+                        <li class="active">Clothings</li>
+                        <li>HandBag</li>
+                        <li>Shoes</li>
+                        <li>Accessories</li>
+                    </ul>
+                </div>
+                <div class="product-slider owl-carousel">
+                    {% for rs in imagens %}
+                    <div class="product-item">
+                        <div class="pi-pic">
+                            <img src="{{rs.image.url}}" alt="">
+                            <div class="icon">
+                                <i class="icon_heart_alt"></i>
+                            </div>
+                            <ul>
+                                <li class="w-icon active">
+                                    <a href="#"><i class="fa fa-search"></i> Büyüt</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="col-lg-3 offset-lg-1">
+                <div class="product-large set-bg m-large" data-setbg="img/products/man-large.jpg">
+                    <h2>Men’s</h2>
+                    <a href="#">Discover More</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Man Banner Section End -->

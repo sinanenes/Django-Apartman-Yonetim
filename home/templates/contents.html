@@ -15,7 +15,7 @@
         <div class="row">
             <div class="col-lg-12">
                 <div class="breadcrumb-text">
-                    <a href="/"><i class="fa fa-home"></i>ANASAYFA</a>
+                    <a href="/"><i class="fa fa-home"></i>ANA SAYFA</a>
                     <span>{{ menudata.title }}</span>
                 </div>
             </div>
@@ -30,7 +30,6 @@
     <div class="container">
         <!--row-->
         <div class="row">
-
             <div class="col-lg-3 col-md-6 col-sm-8 order-2 order-lg-1">
                 <div class="blog-sidebar">
                     <div class="search-form">
@@ -104,9 +103,8 @@
                     </div>
                 </div>
             </div>
-
             <div class="col-lg-9 order-1 order-lg-2">
-                 <h2>{{ menudata.title }}</h2>
+                <h2>{{ menudata.title }}</h2>
                 <hr>
                 <div class="row">
                     {% for rs in contents %}
@@ -121,7 +119,7 @@
                                     <li class="w-icon active">
                                         <a href="/content/{{ rs.id }}/{{ rs.slug }}">
                                             <i class="fa fa-search"></i>
-                                             İncele
+                                            İncele
                                         </a>
                                     </li>
                                     <!--<li class="w-icon"><a href="#"><i class="fa fa-random"></i></a></li>-->
@@ -136,7 +134,6 @@
                         </div>
                     </div>
                     {% endfor %}
-
                     <div class="col-lg-12">
                         <div class="loading-more">
                             <i class="icon_loading"></i>

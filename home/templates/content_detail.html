@@ -1,0 +1,167 @@
+{% extends 'homebase.html' %}
+{% load static %}
+{% block title %} {{ content.title }} {% endblock %}
+{% block keywords %} {{ content.keywords }} {% endblock %}
+{% block description %} {{ content.description }} {% endblock %}
+
+{% block head %}
+<link rel="shortcut icon" type="image/x-icon" href="{{ setting.icon.url }}">
+{% endblock %}
+
+{% block content %}
+<!-- Breadcrumb Section Begin -->
+<div class="breacrumb-section">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="breadcrumb-text">
+                    <a href="/"><i class="fa fa-home"></i>ANA SAYFA</a>
+                    <a href="/menu/{{ content.menu_id }}/{{ content.menu.slug }}">{{ content.menu }}</a>
+                    <span>{{ content.title }}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Breadcrumb Section End -->
+
+<!-- Blog Details Section Begin -->
+<section class="blog-details spad">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="blog-details-inner">
+                    <div class="blog-detail-title">
+                        <h2>{{ content.title }}</h2>
+                        <p>{{ content.type }} <span>- {{ content.update_at }}</span></p>
+                    </div>
+                    <div class="blog-large-pic">
+                        <img src="{{content.image.url}}" alt="">
+                    </div>
+                    <div class="blog-detail-desc">
+                        <p>{{ content.description }}</p>
+                    </div>
+                    <!--<div class="blog-quote">
+                        <p>{{ content.description }}<span>- Steven Jobs</span></p>
+                    </div>-->
+                    <p>{{ content.detail | safe }}</p>
+                    <div class="blog-more">
+                        <div class="row">
+                            <!--                           <div class="col-sm-4">
+                                                           <img src="img/blog/blog-detail-1.jpg" alt="">
+                                                       </div>
+                                                       <div class="col-sm-4">
+                                                           <img src="img/blog/blog-detail-2.jpg" alt="">
+                                                       </div>
+                                                       <div class="col-sm-4">
+                                                           <img src="img/blog/blog-detail-3.jpg" alt="">
+                                                       </div>-->
+                            <div class="col-lg-8 offset-lg-1">
+                                <div class="product-slider owl-carousel">
+                                    {% for rs in imagens %}
+                                    <div class="product-item">
+                                        <div class="pi-pic">
+                                            <img src="{{rs.image.url}}" alt="" style="height:200px">
+                                            <div class="icon">
+                                                <i class="icon_heart_alt"></i>
+                                            </div>
+                                            <ul>
+                                                <li class="w-icon active">
+                                                    <a href="#"><i class="fa fa-search"></i> Büyüt</a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tag-share">
+                        <div class="details-tag">
+                            <i class="fa fa-tags"></i>
+                            <a>{{ content.keywords }}</a>
+                            <!--                            <ul>
+                                                            <li><i class="fa fa-tags"></i></li>
+                                                            <li>Travel</li>
+                                                            <li>Beauty</li>
+                                                            <li>Fashion</li>
+                                                        </ul>-->
+                        </div>
+                        <div class="blog-share">
+                            <span>Share:</span>
+                            <div class="social-links">
+                                <a href="#"><i class="fa fa-facebook"></i></a>
+                                <a href="#"><i class="fa fa-twitter"></i></a>
+                                <a href="#"><i class="fa fa-google-plus"></i></a>
+                                <a href="#"><i class="fa fa-instagram"></i></a>
+                                <a href="#"><i class="fa fa-youtube-play"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                    <!--<div class="blog-post">
+                        <div class="row">
+                            <div class="col-lg-5 col-md-6">
+                                <a href="#" class="prev-blog">
+                                    <div class="pb-pic">
+                                        <i class="ti-arrow-left"></i>
+                                        <img src="img/blog/prev-blog.png" alt="">
+                                    </div>
+                                    <div class="pb-text">
+                                        <span>Previous Post:</span>
+                                        <h5>The Personality Trait That Makes People Happier</h5>
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="col-lg-5 offset-lg-2 col-md-6">
+                                <a href="#" class="next-blog">
+                                    <div class="nb-pic">
+                                        <img src="img/blog/next-blog.png" alt="">
+                                        <i class="ti-arrow-right"></i>
+                                    </div>
+                                    <div class="nb-text">
+                                        <span>Next Post:</span>
+                                        <h5>The Personality Trait That Makes People Happier</h5>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="posted-by">
+                        <div class="pb-pic">
+                            <img src="img/blog/post-by.png" alt="">
+                        </div>
+                        <div class="pb-text">
+                            <a href="#">
+                                <h5>Shane Lynch</h5>
+                            </a>
+                            <p>Aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
+                                velit esse cillum bore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
+                                amodo</p>
+                        </div>
+                    </div>-->
+                    <!--                    <div class="leave-comment">
+                                            <h4>Leave A Comment</h4>
+                                            <form action="#" class="comment-form">
+                                                <div class="row">
+                                                    <div class="col-lg-6">
+                                                        <input type="text" placeholder="Name">
+                                                    </div>
+                                                    <div class="col-lg-6">
+                                                        <input type="text" placeholder="Email">
+                                                    </div>
+                                                    <div class="col-lg-12">
+                                                        <textarea placeholder="Messages"></textarea>
+                                                        <button type="submit" class="site-btn">Send message</button>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>-->
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Blog Details Section End -->
+
+{% endblock %}

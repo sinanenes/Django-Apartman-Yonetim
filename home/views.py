@@ -1,9 +1,9 @@
 from django.contrib import messages
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render
 
 # Create your views here.
-from content.models import Content, Menu
+from content.models import Content, Menu, Imagen
 from home.models import Setting, ContactFormu, ContactFormMessage
 
 
@@ -73,3 +73,16 @@ def menu_contents(request, id, slug):
                'menudata': menudata
                }
     return render(request, 'contents.html', context)
+
+
+def content_detail(request, id, slug):
+    menu = Menu.objects.all()
+    content = Content.objects.get(pk=id)
+    imagens = Imagen.objects.filter(content_id=id)
+    # menudata = Menu.objects.get(pk=content.menu_id)
+    context = {'content': content,
+               'menu': menu,
+               'imagens': imagens
+               # 'menudata': menudata
+               }
+    return render(request, 'content_detail.html', context)
