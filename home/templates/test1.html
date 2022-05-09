@@ -39,3 +39,99 @@
     </div>
 </section>
 <!-- Man Banner Section End -->
+
+
+<!-- Urun Yorum Ekle Oy Verme Listeleme Login Kontrolu Begin -->
+<div class="row">
+    <div class="posted-by col-lg-6">
+        <h4>YORUMLAR</h4>
+        <hr>
+        {% for rs in comments %}
+        <div class="pb-pic">
+            <img src="{% static 'img/blog/post-by.png' %}" alt="">
+        </div>
+        <div class="pb-text">
+            <a href="#">
+                <h5><i class="fa fa-user-o"></i> {{ rs.user.username }}</h5>
+            </a>
+            <b>{{ rs.subject }}</b>
+            <p>{{ rs.comment }}</p>
+            <b>{{ rs.rate }} ☆</b>
+            <h6><i class="fa fa-clock-o"></i> {{ rs.create_at}}</h6>
+            <hr>
+        </div>
+        {% endfor %}
+    </div>
+
+    <div class="leave-comment col-lg-6">
+        <h4>YORUM EKLE</h4>
+
+        {% if messages %}
+        {% for message in messages %}
+        <div class="alert alert-{{message.tags}}" role="alert">
+            {{ message }}
+        </div>
+        {% endfor %}
+        {% endif %}
+
+        <form action="/content/addcomment/{{ content.id }}" method="POST" class="comment-form">
+            {% csrf_token %}
+            <div class="row">
+
+                <div class="col-lg-6">
+                    <input type="text" placeholder="Name">
+                </div>
+                <div class="col-lg-6">
+                    <input type="text" placeholder="Email">
+                </div>
+                <div class="col-lg-12">
+                    <input type="text" name="subject" placeholder="Konu" id="id_subject">
+                </div>
+                <div class="col-lg-12">
+                    <textarea name="comment" placeholder="Yorum" id="id_comment"></textarea>
+                    <div class="col-lg-12">
+                        <div class="row">
+                            <!--<div class="col-lg-9">
+                                <button type="submit" class="site-btn">GÖNDER</button>
+                                </div>-->
+                            <div class="col-lg-3">
+                                <div class="rate bg-lights py-3 text-white mt-3"
+                                     style="width:180px">
+                                    <!--<h6 class="mb-0">Oy Ver</h6>
+                                     <strong class="text-uppercase">Oy Ver</strong>-->
+                                    <div class="rating">
+                                        <input type="radio" name="rate" value="5" id="5"><label
+                                            for="5">☆</label>
+                                        <input type="radio" name="rate" value="4" id="4"><label
+                                            for="4">☆</label>
+                                        <input type="radio" name="rate" value="3" id="3"><label
+                                            for="3">☆</label>
+                                        <input type="radio" name="rate" value="2" id="2"><label
+                                            for="2">☆</label>
+                                        <input type="radio" name="rate" value="1" id="1"><label
+                                            for="1">☆</label>
+                                    </div>
+                                    <!-- <div class="buttons px-4 mt-0">
+                                         &lt;!&ndash;
+                                         <button class="btn btn-warning btn-block rating-submit">
+                                         Onayla</button>&ndash;&gt;
+                                         <button class="primary-btn">OY VER</button>
+                                         </div>-->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="buttons px-4 mt-0">
+                    {% if user.id is not None %}
+                    <!--<button class="btn btn-warning btn-block rating-submit">Onayla</button>-->
+                    <button class="primary-btn">GÖNDER</button>
+                    {% else %}
+                    Yorum Eklemek İçin <a href="/login"> Login </a> Olunuz!
+                    {% endif %}
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<!-- Urun Yorum Ekle Oy Verme Listeleme Login Kontrolu End -->

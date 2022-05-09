@@ -4,6 +4,7 @@ from django.shortcuts import render
 
 # Create your views here.
 from content.models import Content, Menu, Imagen, Comment
+from home.forms import SearchFormu
 from home.models import Setting, ContactFormu, ContactFormMessage
 
 
@@ -42,6 +43,7 @@ def referanslar(request):
 
 
 def iletisim(request):
+    menu = Menu.objects.all()
     if request.method == 'POST':  # form post edildiyse
         form = ContactFormu(request.POST)
         if form.is_valid():
@@ -58,7 +60,6 @@ def iletisim(request):
     setting = Setting.objects.get(pk=1)
     # setting = Setting.objects.all()
     form = ContactFormu()
-    menu = Menu.objects.all()
     context = {'setting': setting, 'menu': menu, 'form': form}
     # context = {'setting': setting, 'page': 'iletisim'}
     return render(request, 'iletisim.html', context)
@@ -88,3 +89,20 @@ def content_detail(request, id, slug):
                # 'menudata': menudata
                }
     return render(request, 'content_detail.html', context)
+
+
+def content_search(request):
+    menu = Menu.objects.all()
+    if request.method == 'POST':  # Check form post
+        form = SearchFormu(request.POST)
+        if form.is_valid():
+            query = form.cleaned_data['query']  # Get form data
+            contents = Content.objects.filter(
+                title__icontains=query)  # select * from contents where title like '%query%'
+            # return HttpResponse(contents)
+            context = {'contents': contents,
+                       'menu': menu,
+                       }
+            return render(request, 'content_search.html', context)
+
+    return HttpResponseRedirect('/')
