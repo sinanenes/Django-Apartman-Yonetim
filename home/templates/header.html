@@ -50,13 +50,23 @@
                 <div class="col-lg-7 col-md-7">
                     <div class="advanced-search">
                         <form action="/search/" method="post" style="height:50px">
-                            {% csrf_token %}
                             <!--<button type="button" class="category-btn">All Categories</button>-->
-                            <select class="category-btn" style="height:50px; border:thin solid black">
-                                <option value="0">İÇERİKLER</option>
-                                <!--                                <option value="1">Menu 01</option>
-                                                                <option value="2">Menu 02</option>-->
+                            {% csrf_token %}
+                            {% load mptt_tags %}
+                            <select name="menuid" class="category-btn" style="height:50px; border:thin solid black">
+                                <option value="0">MENÜLER</option>
+                                {% recursetree menu %}
+                                    {% if node.is_leaf_node %}
+                                        <option value="{{ node.id }}">{{node.title}}</option>
+                                    {% endif %}
+                                    {% if not node.is_leaf_node %}
+                                        <optgroup label="{{ node.title }}">
+                                            {{ children }}
+                                        </optgroup>
+                                    {% endif %}
+                                {% endrecursetree %}
                             </select>
+
                             <div class="input-group" style="border:thin solid black">
                                 <input id="query" name="query" type="text" placeholder="ARAMA METNİ"
                                        STYLE="color:black">

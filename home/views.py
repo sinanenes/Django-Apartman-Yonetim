@@ -99,8 +99,13 @@ def content_search(request):
         form = SearchFormu(request.POST)
         if form.is_valid():
             query = form.cleaned_data['query']  # Get form data
-            contents = Content.objects.filter(title__icontains=query)
-            # select * from contents where title like '%query%'
+            menuid = form.cleaned_data['menuid']  # Get form data
+            if menuid == 0:
+                contents = Content.objects.filter(title__icontains=query)
+                # select * from contents where title like '%query%'
+            else:
+                contents = Content.objects.filter(title__icontains=query, menu_id=menuid)
+                # select * from contents where title like '%query%' and menu_id = menuid
             # return HttpResponse(contents)
             context = {'contents': contents,
                        'menu': menu,
