@@ -135,3 +135,24 @@
     </div>
 </div>
 <!-- Urun Yorum Ekle Oy Verme Listeleme Login Kontrolu End -->
+
+
+<!-- Urun Arama Begin -->
+<div class="col-lg-7 col-md-7">
+    <div class="advanced-search">
+        <form action="/search/" method="POST" style="height:50px">
+            {% csrf_token %}
+            <!--<button type="button" class="category-btn">All Categories</button>-->
+            <select class="category-btn" style="height:50px; border:thin solid black">
+                <option value="0">İÇERİKLER</option>
+                <!--                                <option value="1">Menu 01</option>
+                                                <option value="2">Menu 02</option>-->
+            </select>
+            <div class="input-group" style="border:thin solid black">
+                <input name="query" type="text" placeholder="ARAMA METNİ" STYLE="color:black">
+                <button><i class="ti-search"></i></button>
+            </div>
+        </form>
+    </div>
+</div>
+<!-- Urun Arama End -->

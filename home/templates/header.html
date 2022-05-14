@@ -35,6 +35,7 @@
             </div>
         </div>
     </div>
+
     <div class="container">
         <div class="inner-header">
             <div class="row">
@@ -48,7 +49,7 @@
 
                 <div class="col-lg-7 col-md-7">
                     <div class="advanced-search">
-                        <form action="/search/" method="POST" style="height:50px">
+                        <form action="/search/" method="post" style="height:50px">
                             {% csrf_token %}
                             <!--<button type="button" class="category-btn">All Categories</button>-->
                             <select class="category-btn" style="height:50px; border:thin solid black">
@@ -57,7 +58,8 @@
                                                                 <option value="2">Menu 02</option>-->
                             </select>
                             <div class="input-group" style="border:thin solid black">
-                                <input name="query" type="text" placeholder="ARAMA METNİ" STYLE="color:black">
+                                <input id="query" name="query" type="text" placeholder="ARAMA METNİ"
+                                       STYLE="color:black">
                                 <button><i class="ti-search"></i></button>
                             </div>
                         </form>
@@ -186,4 +188,3 @@
         </div>
     </div>
 </header>
-

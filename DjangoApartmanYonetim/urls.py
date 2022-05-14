@@ -32,8 +32,8 @@ urlpatterns = [
     path('menu/<int:id>/<slug:slug>/', views.menu_contents, name='menu_contents'),
     path('content/<int:id>/<slug:slug>/', views.content_detail, name='content_detail'),
     path('search/', views.content_search, name='content_search'),
+    path('search_auto/', views.content_search_auto, name='content_search_auto'),
 ]
-
 
 if settings.DEBUG:  # new
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
