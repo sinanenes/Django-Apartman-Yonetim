@@ -7,7 +7,7 @@ from django.shortcuts import render
 
 # Create your views here.
 from content.models import Content, Menu, Imagen, Comment
-from home.forms import SearchFormu
+from home.forms import SearchFormu, SignUpFormu
 from home.models import Setting, ContactFormu, ContactFormMessage
 
 
@@ -157,3 +157,26 @@ def login_view(request):
     context = {'menu': menu,
                }
     return render(request, 'login.html', context)
+
+
+def signup_view(request):
+    menu = Menu.objects.all()
+    if request.method == 'POST':
+        form = SignUpFormu(request.POST)
+        if form.is_valid():
+            form.save()
+            username = form.cleaned_data.get('username')
+            password = form.cleaned_data.get('password1')
+            user = authenticate(request, username=username, password=password)
+            login(request, user)
+            return HttpResponseRedirect('/')
+        else:
+            # Return an 'invalid signup' error message.
+            messages.warning(request, "Hatalı Bilgi! Girdiğiniz Verileri Kontrol Ediniz!")
+            return HttpResponseRedirect('/signup')
+
+    form = SignUpFormu()
+    context = {'menu': menu,
+               'form': form,
+               }
+    return render(request, 'signup.html', context)
