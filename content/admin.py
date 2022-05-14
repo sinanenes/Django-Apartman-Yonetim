@@ -22,6 +22,7 @@ class ContentAdmin(admin.ModelAdmin):
     list_filter = ['status', 'menu']
     inlines = [ContentImagenInline]
     readonly_fields = ('image_tag',)
+    prepopulated_fields = {'slug': ('title',)}
 
 
 class ImagenAdmin(admin.ModelAdmin):
@@ -30,11 +31,12 @@ class ImagenAdmin(admin.ModelAdmin):
     readonly_fields = ('image_tag',)
 
 
-class CategoryAdminTree(DraggableMPTTAdmin):
+class MenuAdminTree(DraggableMPTTAdmin):
     mptt_indent_field = "title"
     list_display = ('tree_actions', 'indented_title',
                     'related_contents_count', 'related_contents_cumulative_count')
     list_display_links = ('indented_title',)
+    prepopulated_fields = {'slug': ('title',)}
 
     def get_queryset(self, request):
         qs = super().get_queryset(request)
@@ -73,7 +75,7 @@ class CommentAdmin(admin.ModelAdmin):
 
 # admin.site.register(Menu, MenuAdmin)
 # admin.site.register(Menu, MPTTModelAdmin)
-admin.site.register(Menu, CategoryAdminTree)
+admin.site.register(Menu, MenuAdminTree)
 admin.site.register(Content, ContentAdmin)
 admin.site.register(Imagen, ImagenAdmin)
 admin.site.register(Comment, CommentAdmin)

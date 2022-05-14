@@ -3,6 +3,7 @@ from django.db import models
 
 # Create your models here.
 from django.forms import ModelForm
+from django.urls import reverse
 from django.utils.safestring import mark_safe
 from ckeditor_uploader.fields import RichTextUploadingField
 from mptt.fields import TreeForeignKey
@@ -22,7 +23,7 @@ class Menu(MPTTModel):
     description = models.CharField(max_length=255)
     image = models.ImageField(blank=True, upload_to='images/')
     status = models.CharField(max_length=10, choices=STATUS)
-    slug = models.SlugField()
+    slug = models.SlugField(null=False, unique=True)
     create_at = models.DateTimeField(auto_now_add=True)
     update_at = models.DateTimeField(auto_now_add=True)
 
@@ -46,6 +47,9 @@ class Menu(MPTTModel):
 
     image_tag.short_description = 'Image'
 
+    def get_absolute_url(self):
+        return reverse('menu_detail', kwargs={'slug': self.slug})
+
 
 class Content(models.Model):
     STATUS = (
@@ -68,7 +72,7 @@ class Content(models.Model):
     detail = RichTextUploadingField()
     type = models.CharField(max_length=10, choices=TYPE)
     # file ve videolink field eklenecek...
-    slug = models.SlugField()
+    slug = models.SlugField(null=False, unique=True)
     # user field eklenecek...
     status = models.CharField(max_length=10, choices=STATUS)
     create_at = models.DateTimeField(auto_now_add=True)
@@ -82,6 +86,9 @@ class Content(models.Model):
             return mark_safe('<img src="{}" height="50"/>'.format(self.image.url))
 
     image_tag.short_description = 'Image'
+
+    def get_absolute_url(self):
+        return reverse('content_detail', kwargs={'slug': self.slug})
 
 
 class Imagen(models.Model):
