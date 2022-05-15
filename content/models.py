@@ -57,10 +57,12 @@ class Content(models.Model):
         ('False', 'Hayır')
     )
     TYPE = (
-        ('News', 'Haber'),
-        ('Announce', 'Duyuru'),
-        ('Decision', 'Karar'),
-        ('Survey', 'Anket')
+        ('Haber', 'Haber'),
+        ('Duyuru', 'Duyuru'),
+        ('Etkinlik', 'Etkinlik'),
+        ('Kararlar', 'Kararlar'),
+        ('Anket', 'Anket'),
+        ('Yönetim', 'Yönetim')
     )
 
     title = models.CharField(max_length=150)

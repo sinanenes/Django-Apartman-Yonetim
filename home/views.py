@@ -1,4 +1,5 @@
 import json
+from importlib.resources import _
 
 from django.contrib import messages
 from django.contrib.auth import logout, authenticate, login
@@ -69,29 +70,39 @@ def iletisim(request):
 
 
 def menu_contents(request, id, slug):
-    contents = Content.objects.filter(menu_id=id)
-    menudata = Menu.objects.get(pk=id)
-    menu = Menu.objects.all()
-    context = {'contents': contents,
-               'menu': menu,
-               'menudata': menudata
-               }
-    return render(request, 'contents.html', context)
+    try:
+        contents = Content.objects.filter(menu_id=id)
+        menudata = Menu.objects.get(pk=id)
+        menu = Menu.objects.all()
+        context = {'contents': contents,
+                   'menu': menu,
+                   'menudata': menudata
+                   }
+        return render(request, 'contents.html', context)
+    except:
+        messages.warning(request, "Hata! Menü Bulunamadı!")
+        link = '/error'
+        return HttpResponseRedirect(link)
 
 
 def content_detail(request, id, slug):
-    menu = Menu.objects.all()
-    content = Content.objects.get(pk=id)
-    imagens = Imagen.objects.filter(content_id=id)
-    comments = Comment.objects.filter(content_id=id, status='True')
-    # menudata = Menu.objects.get(pk=content.menu_id)
-    context = {'content': content,
-               'menu': menu,
-               'imagens': imagens,
-               'comments': comments
-               # 'menudata': menudata
-               }
-    return render(request, 'content_detail.html', context)
+    try:
+        menu = Menu.objects.all()
+        content = Content.objects.get(pk=id)
+        imagens = Imagen.objects.filter(content_id=id)
+        comments = Comment.objects.filter(content_id=id, status='True')
+        # menudata = Menu.objects.get(pk=content.menu_id)
+        context = {'content': content,
+                   'menu': menu,
+                   'imagens': imagens,
+                   'comments': comments
+                   # 'menudata': menudata
+                   }
+        return render(request, 'content_detail.html', context)
+    except:
+        messages.warning(request, "Hata! İçerik Bulunamadı!")
+        link = '/error'
+        return HttpResponseRedirect(link)
 
 
 def content_search(request):
@@ -187,3 +198,11 @@ def signup_view(request):
                'form': form,
                }
     return render(request, 'signup.html', context)
+
+
+def error(request):
+    menu = Menu.objects.all()
+    context = {
+        'menu': menu,
+    }
+    return render(request, "error_page.html", context)

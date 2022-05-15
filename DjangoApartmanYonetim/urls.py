@@ -37,6 +37,7 @@ urlpatterns = [
     path('login/', views.login_view, name='login_view'),
     path('signup/', views.signup_view, name='signup_view'),
     path('user/', include('user.urls')),
+    path('error/', views.error, name='error'),
 ]
 
 if settings.DEBUG:  # new
