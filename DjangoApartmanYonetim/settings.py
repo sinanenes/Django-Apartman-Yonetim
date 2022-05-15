@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'ckeditor',
     'ckeditor_uploader',
     'mptt',
+    'user.apps.UserConfig',
 ]
 
 MIDDLEWARE = [

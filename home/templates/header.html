@@ -38,8 +38,9 @@
                         <!--<div class="container">-->
                         <nav class="nav-menu mobile-menu">
                             <ul>
-                                <li><a href="#">{{ user.username }}</i></a>
+                                <li><a href="#"><image src="{{ profile.image.url }}" style="height:30px"></image>{{ user.username }}</a>
                                     <ul class="dropdown">
+                                        <li><a href="/user">Hesabım</a></li>
                                         <li><a href="/logout/">Aidatlarım</a></li>
                                         <li><a href="/logout/">Taleplerim</a></li>
                                         <li><a href="/logout/">ÇIKIŞ</a></li>
@@ -67,7 +68,6 @@
                     {% endif %}
                 </div>
             </div>
-
 
         </div>
     </div>

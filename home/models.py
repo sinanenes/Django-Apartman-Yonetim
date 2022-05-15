@@ -93,7 +93,7 @@ class UserProfile(models.Model):
 
     def image_tag(self):
         if self.image:
-            return mark_safe('<img src="{}" height="50"/>'.format(self.image.url))
+            return mark_safe('<img src="{}" style="height:50px"/>'.format(self.image.url))
     image_tag.short_description = 'Image'
 
 

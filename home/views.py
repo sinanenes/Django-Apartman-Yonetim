@@ -8,7 +8,7 @@ from django.shortcuts import render
 # Create your views here.
 from content.models import Content, Menu, Imagen, Comment
 from home.forms import SearchFormu, SignUpFormu
-from home.models import Setting, ContactFormu, ContactFormMessage
+from home.models import Setting, ContactFormu, ContactFormMessage, UserProfile
 
 
 def index(request):
@@ -169,6 +169,13 @@ def signup_view(request):
             password = form.cleaned_data.get('password1')
             user = authenticate(request, username=username, password=password)
             login(request, user)
+            # Create data in profile table for user
+            current_user = request.user
+            data = UserProfile()
+            data.user_id = current_user.id
+            data.image = 'images/users/user.png'
+            data.save()
+            messages.success(request, "Hoş Geldiniz! Üyelik Başarıyla Tamamlandı!")
             return HttpResponseRedirect('/')
         else:
             # Return an 'invalid signup' error message.
