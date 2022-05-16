@@ -1,14 +1,16 @@
 from django.contrib import messages
 from django.contrib.auth import update_session_auth_hash
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import PasswordChangeForm
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, redirect
 
-from content.models import Menu
+from content.models import Menu, Comment
 from home.models import UserProfile
 from user.forms import UserUpdateFormu, ProfileUpdateFormu
 
 
+@login_required(login_url='/login')  # Check login
 def index(request):
     menu = Menu.objects.all()
     current_user = request.user  # Access User Session information
@@ -19,6 +21,7 @@ def index(request):
     return render(request, 'user_profile.html', context)
 
 
+@login_required(login_url='/login')  # Check login
 def user_update(request):
     if request.method == 'POST':
         user_form = UserUpdateFormu(request.POST, instance=request.user)  # request.user is user data
@@ -45,6 +48,7 @@ def user_update(request):
         return render(request, 'user_update.html', context)
 
 
+@login_required(login_url='/login')  # Check login
 def change_password(request):
     if request.method == 'POST':
         form = PasswordChangeForm(request.user, request.POST)
@@ -60,3 +64,28 @@ def change_password(request):
         menu = Menu.objects.all()
         form = PasswordChangeForm(request.user)
         return render(request, 'change_password.html', {'form': form, 'menu': menu})
+
+
+@login_required(login_url='/login')  # Check login
+def comments(request):
+    menu = Menu.objects.all()
+    current_user = request.user
+    comments = Comment.objects.filter(user_id=current_user.id)
+    context = {
+        'menu': menu,
+        'comments': comments,
+    }
+    return render(request, 'user_comments.html', context)
+
+
+@login_required(login_url='/login')  # Check login
+def deletecomment(request, id):
+    try:
+        current_user = request.user
+        HttpResponse(current_user.id)
+        Comment.objects.filter(id=id, user_id=current_user.id).delete()
+        messages.success(request, 'Comment Successfully Deleted!')
+        return HttpResponseRedirect('/user/comments')
+    except:
+        messages.warning(request, "Hata! Yorum Silinemedi!")
+        return HttpResponseRedirect('/error')
