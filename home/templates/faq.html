@@ -1,0 +1,69 @@
+{% extends 'homebase.html' %}
+
+{% block title %} Sıkça Sorulan Sorular {% endblock %}
+{% block keywords %} {{ setting.keywords }} {% endblock %}
+{% block description %} {{ setting.description }} {% endblock %}
+
+{% block head %}
+<link rel="shortcut icon" type="image/x-icon" href="{{ setting.icon.url }}">
+<script>
+  $( function() {
+    $( "#accordion" ).accordion();
+  } );
+
+
+</script>
+{% endblock %}
+
+{% block content %}
+<!-- Breadcrumb Section Begin -->
+<div class="breacrumb-section">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="breadcrumb-text">
+                    <a href="/"><i class="fa fa-home"></i>ANA SAYFA</a>
+                    <span>Sıkça Sorulan Sorular</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Breadcrumb Section Begin -->
+
+<!--section-->
+<div class="section">
+    <!--container-->
+    <div class="container">
+        <!--row-->
+        <div class="row">
+            <!-- Faq Section Begin -->
+            <div class="faq-section spad">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="faq-accordin">
+                                <div id="accordion">
+                                    {% for rs in faq %}
+                                    <h3>{{rs.question}}</h3>
+                                    <div>
+                                        <p>
+                                            {{rs.answer}}
+                                        </p>
+                                    </div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Faq Section End -->
+        </div>
+        <!--row-->
+    </div>
+    <!--container-->
+</div>
+<!--section-->
+
+{% endblock %}

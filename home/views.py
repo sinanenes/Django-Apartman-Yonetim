@@ -9,7 +9,7 @@ from django.shortcuts import render
 # Create your views here.
 from content.models import Content, Menu, Imagen, Comment
 from home.forms import SearchFormu, SignUpFormu
-from home.models import Setting, ContactFormu, ContactFormMessage, UserProfile
+from home.models import Setting, ContactFormu, ContactFormMessage, UserProfile, FAQ
 
 
 def index(request):
@@ -206,3 +206,13 @@ def error(request):
         'menu': menu,
     }
     return render(request, "error_page.html", context)
+
+
+def faq(request):
+    menu = Menu.objects.all()
+    faq = FAQ.objects.all().order_by('ordernumber')
+    context = {
+        'menu': menu,
+        'faq': faq
+    }
+    return render(request, "faq.html", context)
