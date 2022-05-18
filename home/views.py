@@ -1,5 +1,4 @@
 import json
-from importlib.resources import _
 
 from django.contrib import messages
 from django.contrib.auth import logout, authenticate, login
@@ -19,13 +18,17 @@ def index(request):
     menu = Menu.objects.all()
     lastcontents = Content.objects.all().order_by('-id')[:4]
     randomcontents = Content.objects.all().order_by('?')[:4]
+    news = Content.objects.filter(type='Haber').order_by('-id')[:4]
+    announcements = Content.objects.filter(type='Duyuru').order_by('-id')[:4]
 
     context = {'setting': setting,
                'menu': menu,
                'page': 'home',
                'sliderdata': sliderdata,
                'lastcontents': lastcontents,
-               'randomcontents': randomcontents
+               'randomcontents': randomcontents,
+               'news': news,
+               'announcements': announcements
                }
     return render(request, 'index.html', context)
 
@@ -81,6 +84,22 @@ def menu_contents(request, id, slug):
         return render(request, 'contents.html', context)
     except:
         messages.warning(request, "Hata! Menü Bulunamadı!")
+        link = '/error'
+        return HttpResponseRedirect(link)
+
+
+def type_contents(request, typecontent):
+    try:
+        contents = Content.objects.filter(type=typecontent)
+        menu = Menu.objects.all()
+        typecon = typecontent
+        context = {'contents': contents,
+                   'menu': menu,
+                   'typecon': typecon
+                   }
+        return render(request, 'type_contents.html', context)
+    except:
+        messages.warning(request, "Hata! İçerik Bulunamadı!")
         link = '/error'
         return HttpResponseRedirect(link)
 

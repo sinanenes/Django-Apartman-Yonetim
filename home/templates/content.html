@@ -3,8 +3,88 @@
 <!--<section class="latest-blog spad">
 </section>-->
 <div class="row">
-<hr>
+    <hr>
 </div>
+
+<!-- Latest News Section Begin -->
+<section class="latest-blog spad">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="section-title">
+                    <h2>HABERLER</h2>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+
+            {% for rs in news %}
+            <div class="col-lg-3 col-md-6">
+                <div class="single-latest-blog">
+                    <img src="{{rs.image.url}}" alt="" style="height:200px">
+                    <div class="latest-text">
+                        <div class="tag-list">
+                            <div class="tag-item">
+                                <i class="fa fa-calendar-o"></i>
+                                {{rs.update_at}}
+                            </div>
+                            <div class="tag-item">
+                                <i class="fa fa-comment-o"></i>
+                                5
+                            </div>
+                        </div>
+                        <a href="/content/{{ rs.id }}/{{ rs.slug }}">
+                            <h4>{{rs.title}}</h4>
+                        </a>
+                        <p>{{rs.description}}</p>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+<!-- Latest News Section End -->
+
+<!-- Latest Announcements Section Begin -->
+<section class="latest-blog spad">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="section-title">
+                    <h2>DUYURULAR</h2>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+
+            {% for rs in announcements %}
+            <div class="col-lg-3 col-md-6">
+                <div class="single-latest-blog">
+                    <img src="{{rs.image.url}}" alt="" style="height:200px">
+                    <div class="latest-text">
+                        <div class="tag-list">
+                            <div class="tag-item">
+                                <i class="fa fa-calendar-o"></i>
+                                {{rs.update_at}}
+                            </div>
+                            <div class="tag-item">
+                                <i class="fa fa-comment-o"></i>
+                                5
+                            </div>
+                        </div>
+                        <a href="/content/{{ rs.id }}/{{ rs.slug }}">
+                            <h4>{{rs.title}}</h4>
+                        </a>
+                        <p>{{rs.description}}</p>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+<!-- Latest Announcements Section End -->
 
 <!-- Deal Of The Week Section Begin-->
 <section class="deal-of-week set-bg spad" data-setbg="{% static 'img/time-bg.jpg' %}">
@@ -54,28 +134,6 @@
             </div>
         </div>
         <div class="row">
-<!--        <div class="product-item">
-                <div class="pi-pic">
-                    <img src="{% static 'img/products/women-4.jpg' %}" alt="">
-                    <div class="icon">
-                        <i class="icon_heart_alt"></i>
-                    </div>
-                    <ul>
-                        <li class="w-icon active"><a href="#"><i class="icon_bag_alt"></i></a></li>
-                        <li class="quick-view"><a href="#">+ Quick View</a></li>
-                        <li class="w-icon"><a href="#"><i class="fa fa-random"></i></a></li>
-                    </ul>
-                </div>
-                <div class="pi-text">
-                    <div class="catagory-name">Towel</div>
-                    <a href="#">
-                        <h5>Converse Shoes</h5>
-                    </a>
-                    <div class="product-price">
-                        $34.00
-                    </div>
-                </div>
-            </div>-->
 
             {% for rs in lastcontents %}
             <div class="col-lg-3 col-md-6">

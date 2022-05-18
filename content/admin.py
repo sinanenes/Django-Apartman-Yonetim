@@ -6,20 +6,20 @@ from mptt.admin import MPTTModelAdmin, DraggableMPTTAdmin
 from content.models import Menu, Content, Imagen, Comment
 
 
-class ContentImagenInline(admin.TabularInline):
-    model = Imagen
-    extra = 5
-
-
 class MenuAdmin(admin.ModelAdmin):
     list_display = ['title', 'status', 'image_tag']
     list_filter = ['status']
     readonly_fields = ('image_tag',)
 
 
+class ContentImagenInline(admin.TabularInline):
+    model = Imagen
+    extra = 5
+
+
 class ContentAdmin(admin.ModelAdmin):
-    list_display = ['title', 'menu', 'type', 'image_tag', 'status']
-    list_filter = ['status', 'menu']
+    list_display = ['title', 'menu', 'type', 'image_tag', 'status', 'create_at']
+    list_filter = ['status', 'menu', 'type']
     inlines = [ContentImagenInline]
     readonly_fields = ('image_tag',)
     prepopulated_fields = {'slug': ('title',)}
