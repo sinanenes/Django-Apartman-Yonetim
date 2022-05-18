@@ -5,7 +5,7 @@ from django.contrib.auth.forms import PasswordChangeForm
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, redirect
 
-from content.models import Menu, Comment
+from content.models import Menu, Comment, Content, ContentFormu
 from home.models import UserProfile
 from user.forms import UserUpdateFormu, ProfileUpdateFormu
 
@@ -89,3 +89,79 @@ def deletecomment(request, id):
     except:
         messages.warning(request, "Hata! Yorum Silinemedi!")
         return HttpResponseRedirect('/error')
+
+
+@login_required(login_url='/login')  # Check login
+def contents(request):
+    menu = Menu.objects.all()
+    current_user = request.user
+    contents = Content.objects.filter(user_id=current_user.id)
+    context = {
+        'menu': menu,
+        'comments': comments,
+        'contents': contents,
+    }
+    return render(request, 'user_contents.html', context)
+
+
+@login_required(login_url='/login')  # Check login
+def addcontent(request):
+    if request.method == 'POST':
+        form = ContentFormu(request.POST, request.FILES)
+        if form.is_valid():
+            current_user = request.user
+            data = Content()  # model ile baglanti
+            data.user_id = current_user.id
+            data.menu = form.cleaned_data['menu']
+            data.title = form.cleaned_data['title']
+            data.keywords = form.cleaned_data['keywords']
+            data.description = form.cleaned_data['description']
+            data.image = form.cleaned_data['image']
+            data.type = form.cleaned_data['type']
+            data.slug = form.cleaned_data['slug']
+            data.detail = form.cleaned_data['detail']
+            data.status = 'False'
+            data.save()  # veri tabanina kaydet
+            messages.success(request, "Your Content Inserted Successfully!")
+            return HttpResponseRedirect('/user/contents')
+        else:
+            messages.error(request, 'Content Form Error:' + str(form.errors))
+            return HttpResponseRedirect('/user/addcontent')
+    else:
+        menu = Menu.objects.all()
+        form = ContentFormu()
+        context = {
+            'menu': menu,
+            'form': form
+        }
+        return render(request, 'user_addcontent.html', context)
+
+
+@login_required(login_url='/login')  # Check login
+def contentedit(request, id):
+    content = Content.objects.get(id=id)
+    if request.method == 'POST':
+        form = ContentFormu(request.POST, request.FILES, instance=content)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Your Content Updated Successfully!")
+            return HttpResponseRedirect('/user/contents')
+        else:
+            messages.error(request, 'Content Form Error:' + str(form.errors))
+            return HttpResponseRedirect('/user/contentedit/' + str(id))
+    else:
+        menu = Menu.objects.all()
+        form = ContentFormu(instance=content)
+        context = {
+            'menu': menu,
+            'form': form
+        }
+        return render(request, 'user_addcontent.html', context)
+
+
+@login_required(login_url='/login')  # Check login
+def contentdelete(request, id):
+    current_user = request.user
+    Content.objects.filter(id=id, user_id=current_user.id).delete()
+    messages.success(request, 'Content deleted..')
+    return HttpResponseRedirect('/user/contents')

@@ -1,8 +1,9 @@
+from ckeditor.widgets import CKEditorWidget
 from django.contrib.auth.models import User
 from django.db import models
 
 # Create your models here.
-from django.forms import ModelForm
+from django.forms import ModelForm, TextInput, Select, FileInput
 from django.urls import reverse
 from django.utils.safestring import mark_safe
 from ckeditor_uploader.fields import RichTextUploadingField
@@ -65,6 +66,7 @@ class Content(models.Model):
         ('Yönetim', 'Yönetim')
     )
 
+    user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
     title = models.CharField(max_length=150)
     keywords = models.CharField(max_length=255)
     description = models.CharField(max_length=255)
@@ -75,7 +77,6 @@ class Content(models.Model):
     type = models.CharField(max_length=10, choices=TYPE)
     # file ve videolink field eklenecek...
     slug = models.SlugField(null=False, unique=True)
-    # user field eklenecek...
     status = models.CharField(max_length=10, choices=STATUS)
     create_at = models.DateTimeField(auto_now_add=True)
     update_at = models.DateTimeField(auto_now_add=True)
@@ -132,3 +133,18 @@ class CommentFormu(ModelForm):
     class Meta:
         model = Comment
         fields = ['subject', 'comment', 'rate']
+
+
+class ContentFormu(ModelForm):
+    class Meta:
+        model = Content
+        fields = ['type', 'menu', 'title', 'keywords', 'description', 'image', 'detail', 'slug']
+        widgets = {
+            'title': TextInput(attrs={'class': 'input', 'placeholder': 'title'}),
+            'keywords': TextInput(attrs={'class': 'input', 'placeholder': 'keywords'}),
+            'description': TextInput(attrs={'class': 'input', 'placeholder': 'description'}),
+            'type': Select(attrs={'class': 'input', 'placeholder': 'type'}, choices=Content.TYPE),
+            'menu': Select(attrs={'class': 'input', 'placeholder': 'menu'}, choices=Menu.objects.all()),
+            'image': FileInput(attrs={'class': 'input', 'placeholder': 'image'}),
+            'detail': CKEditorWidget(),  # Ckeditor input
+        }

@@ -16,10 +16,10 @@ def index(request):
     setting = Setting.objects.get(pk=1)
     sliderdata = Content.objects.all()[:4]
     menu = Menu.objects.all()
-    lastcontents = Content.objects.all().order_by('-id')[:4]
-    randomcontents = Content.objects.all().order_by('?')[:4]
-    news = Content.objects.filter(type='Haber').order_by('-id')[:4]
-    announcements = Content.objects.filter(type='Duyuru').order_by('-id')[:4]
+    lastcontents = Content.objects.filter(status='True').order_by('-id')[:4]
+    randomcontents = Content.objects.filter(status='True').order_by('?')[:4]
+    news = Content.objects.filter(type='Haber', status='True').order_by('-id')[:4]
+    announcements = Content.objects.filter(type='Duyuru', status='True').order_by('-id')[:4]
 
     context = {'setting': setting,
                'menu': menu,
