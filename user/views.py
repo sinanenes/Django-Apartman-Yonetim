@@ -5,7 +5,7 @@ from django.contrib.auth.forms import PasswordChangeForm
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, redirect
 
-from content.models import Menu, Comment, Content, ContentFormu
+from content.models import Menu, Comment, Content, ContentFormu, ContentImageFormu, Imagen
 from home.models import UserProfile
 from user.forms import UserUpdateFormu, ProfileUpdateFormu
 
@@ -165,3 +165,34 @@ def contentdelete(request, id):
     Content.objects.filter(id=id, user_id=current_user.id).delete()
     messages.success(request, 'Content deleted..')
     return HttpResponseRedirect('/user/contents')
+
+
+def contentaddimage(request, id):
+    if request.method == 'POST':
+        lasturl = request.META.get('HTTP_REFERER')
+        form = ContentImageFormu(request.POST, request.FILES)
+        if form.is_valid():
+            data = Imagen()
+            data.title = form.cleaned_data['title']
+            data.content_id = id
+            data.image = form.cleaned_data['image']
+            data.save()
+            messages.success(request, 'Your image has been successfully uploaded!')
+            return HttpResponseRedirect(lasturl)
+        else:
+            messages.warning(request, 'Form Error :' + str(form.errors))
+            return HttpResponseRedirect(lasturl)
+    else:
+        content = Content.objects.get(id=id)
+        images = []
+        try:
+            images = Imagen.objects.filter(content_id=id)
+        except:
+            pass
+        form = ContentImageFormu()
+        context = {
+            'content': content,
+            'images': images,
+            'form': form
+        }
+        return render(request, 'content_gallery.html', context)

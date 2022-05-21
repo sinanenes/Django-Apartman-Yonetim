@@ -69,6 +69,7 @@
                                             <th>Title</th>
                                             <th>Type</th>
                                             <th>Menu</th>
+                                            <th>Gallery</th>
                                             <th>Status</th>
                                             <th>Date</th>
                                             <th>Detail</th>
@@ -79,12 +80,18 @@
                                         <tr>
                                             <td class="cart-title first-row">
                                                 <a href="/content/{{ rs.id }}/{{ rs.slug }}">
-                                                <img src="{{rs.image.url}}" style="height:30px;">
+                                                    <img src="{{rs.image.url}}" style="height:30px;">
                                                 </a>
                                             </td>
                                             <td><a href="/content/{{ rs.id }}/{{ rs.slug }}"><h6>{{rs.title}}</h6></a></td>
                                             <td><h6>{{rs.type}}</h6></td>
                                             <td><h6>{{rs.menu.title}}</h6></td>
+                                            <td>
+                                                <a href="javascript:;"
+                                                   onclick="window.open('/user/contentaddimage/{{rs.id}}','gallery','height=600,width=800,top=50,left=150')">
+                                                    <img src="{%static '' %}img/gallery.png" alt="" style="height:50px; width:50px">
+                                                </a>
+                                            </td>
                                             <td><h6>{{rs.status}}</h6></td>
                                             <td><h6>{{rs.create_at}}</h6></td>
                                             <td><a class="primary-btn" href="/user/contentedit/{{rs.id}}">Edit</a></td>
