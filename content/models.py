@@ -73,7 +73,7 @@ class Content(models.Model):
     image = models.ImageField(blank=True, upload_to='images/')
     menu = models.ForeignKey(Menu, on_delete=models.CASCADE)  # relation with Menu table
     # detail = models.TextField()
-    detail = RichTextUploadingField()
+    detail = RichTextUploadingField(null=True, blank=True)
     type = models.CharField(max_length=10, choices=TYPE)
     # file ve videolink field eklenecek...
     slug = models.SlugField(null=False, unique=True)

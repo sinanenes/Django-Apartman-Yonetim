@@ -40,6 +40,7 @@ urlpatterns = [
     path('user/', include('user.urls')),
     path('error/', views.error, name='error'),
     path('sss/', views.faq, name='faq'),
+    path('demand/', include('demand.urls')),
 ]
 
 if settings.DEBUG:  # new
