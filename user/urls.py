@@ -14,4 +14,8 @@ urlpatterns = [
     path('contentedit/<int:id>', views.contentedit, name='contentedit'),
     path('contentdelete/<int:id>', views.contentdelete, name='contentdelete'),
     path('contentaddimage/<int:id>', views.contentaddimage, name='contentaddimage'),
+    path('demands/', views.demands, name='demands'),
+    path('adddemand/', views.adddemand, name='adddemand'),
+    path('demandedit/<int:id>', views.demandedit, name='demandedit'),
+    path('demanddelete/<int:id>', views.demanddelete, name='demanddelete'),
 ]

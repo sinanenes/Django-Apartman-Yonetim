@@ -1,9 +1,10 @@
+from ckeditor.widgets import CKEditorWidget
 from ckeditor_uploader.fields import RichTextUploadingField
 from django.contrib.auth.models import User
 from django.db import models
 
 # Create your models here.
-from django.forms import ModelForm
+from django.forms import ModelForm, Select, TextInput
 
 
 class Demand(models.Model):
@@ -41,3 +42,8 @@ class DemandFormu(ModelForm):
     class Meta:
         model = Demand
         fields = ['type', 'subject', 'detail']
+        widgets = {
+            'type': Select(attrs={'class': 'input', 'placeholder': 'type'}, choices=Demand.TYPE),
+            'subject': TextInput(attrs={'class': 'input', 'placeholder': 'subject'}),
+            'detail': CKEditorWidget(),  # Ckeditor input
+        }

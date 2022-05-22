@@ -6,6 +6,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, redirect
 
 from content.models import Menu, Comment, Content, ContentFormu, ContentImageFormu, Imagen
+from demand.models import Demand, DemandFormu
 from home.models import UserProfile
 from user.forms import UserUpdateFormu, ProfileUpdateFormu
 
@@ -196,3 +197,73 @@ def contentaddimage(request, id):
             'form': form
         }
         return render(request, 'content_gallery.html', context)
+
+
+@login_required(login_url='/login')  # Check login
+def demands(request):
+    menu = Menu.objects.all()
+    current_user = request.user
+    userdemands = Demand.objects.filter(user_id=current_user.id)
+    context = {
+        'menu': menu,
+        'userdemands': userdemands,
+    }
+    return render(request, 'user_demands.html', context)
+
+
+@login_required(login_url='/login')  # Check login
+def adddemand(request):
+    if request.method == 'POST':
+        demandForm = DemandFormu(request.POST, request.FILES)
+        if demandForm.is_valid():
+            current_user = request.user
+            data = Demand()  # model ile baglanti
+            data.user_id = current_user.id
+            data.type = demandForm.cleaned_data['type']
+            data.subject = demandForm.cleaned_data['subject']
+            data.detail = demandForm.cleaned_data['detail']
+            data.status = 'New'
+            data.save()  # veri tabanina kaydet
+            messages.success(request, "Your Demand Inserted Successfully!")
+            return HttpResponseRedirect('/user/demands')
+        else:
+            messages.error(request, 'Demand Form Error:' + str(demandForm.errors))
+            return HttpResponseRedirect('/user/adddemand')
+    else:
+        menu = Menu.objects.all()
+        demandForm = DemandFormu()
+        context = {
+            'menu': menu,
+            'demandForm': demandForm
+        }
+        return render(request, 'user_adddemand.html', context)
+
+
+@login_required(login_url='/login')  # Check login
+def demandedit(request, id):
+    demand = Demand.objects.get(id=id)
+    if request.method == 'POST':
+        demandForm = DemandFormu(request.POST, request.FILES, instance=demand)
+        if demandForm.is_valid():
+            demandForm.save()
+            messages.success(request, "Your Demand Updated Successfully!")
+            return HttpResponseRedirect('/user/demands')
+        else:
+            messages.error(request, 'Demand Form Error:' + str(demandForm.errors))
+            return HttpResponseRedirect('/user/demandedit/' + str(id))
+    else:
+        menu = Menu.objects.all()
+        demandForm = DemandFormu(instance=demand)
+        context = {
+            'menu': menu,
+            'demandForm': demandForm
+        }
+        return render(request, 'user_adddemand.html', context)
+
+
+@login_required(login_url='/login')  # Check login
+def demanddelete(request, id):
+    current_user = request.user
+    Demand.objects.filter(id=id, user_id=current_user.id).delete()
+    messages.success(request, 'Demand deleted..')
+    return HttpResponseRedirect('/user/demands')
