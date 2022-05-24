@@ -30,6 +30,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'payment.apps.PaymentConfig',
     'demand.apps.DemandConfig',
     'content.apps.ContentConfig',
     'home.apps.HomeConfig',

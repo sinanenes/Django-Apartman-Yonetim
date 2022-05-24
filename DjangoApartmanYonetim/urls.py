@@ -41,6 +41,7 @@ urlpatterns = [
     path('error/', views.error, name='error'),
     path('sss/', views.faq, name='faq'),
     path('demand/', include('demand.urls')),
+    path('payment/', include('payment.urls')),
 ]
 
 if settings.DEBUG:  # new
