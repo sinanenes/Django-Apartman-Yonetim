@@ -18,4 +18,8 @@ urlpatterns = [
     path('adddemand/', views.adddemand, name='adddemand'),
     path('demandedit/<int:id>', views.demandedit, name='demandedit'),
     path('demanddelete/<int:id>', views.demanddelete, name='demanddelete'),
+    path('payments/', views.payments, name='payments'),
+    path('addpayment/', views.addpayment, name='addpayment'),
+    path('paymentedit/<int:id>', views.paymentedit, name='paymentedit'),
+    path('paymentdelete/<int:id>', views.paymentdelete, name='paymentdelete'),
 ]

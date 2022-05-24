@@ -1,6 +1,6 @@
 {% extends 'homebase.html' %}
 {% load static %}
-{% block title %} Add Demand {% endblock %}
+{% block title %} Add Payment {% endblock %}
 {% block keywords %} {{ setting.keywords }} {% endblock %}
 {% block description %} {{ setting.description }} {% endblock %}
 
@@ -20,7 +20,7 @@
             <div class="col-lg-12">
                 <div class="breadcrumb-text">
                     <a href="/"><i class="fa fa-home"></i>ANA SAYFA</a>
-                    <span>ADD DEMAND</span>
+                    <span>ADD PAYMENT</span>
                 </div>
             </div>
         </div>
@@ -32,6 +32,7 @@
 <div class="section">
     <!--container-->
     <div class="container">
+        <!--row-->
         {% if messages %}
         {% for message in messages %}
         <div class="alert alert-{{message.tags}}" role="alert">
@@ -39,7 +40,7 @@
         </div>
         {% endfor %}
         {% endif %}
-        <!--row-->
+
         <div class="row">
             <!--{{setting.contact|safe}}-->
             <div class="col-md-2">
@@ -49,15 +50,15 @@
             </div>
             <div class="col-md-10">
                 <div class="section-title">
-                    <h3 class="title">Add Demand</h3>
+                    <h3 class="title">Add Payment</h3>
                 </div>
 
                 <div class="content-section">
                     <form method="POST" enctype="multipart/form-data">
                         {% csrf_token %}
                         <fieldset class="form-group">
-                            {{ demandForm.media }}  <!--ckeditor ayarlarini getirir-->
-                            {{ demandForm.as_p }}
+                            {{ paymentForm.media }}  <!--ckeditor ayarlarini getirir-->
+                            {{ paymentForm.as_p }}
                         </fieldset>
                         <div class="form-group">
                             <button class="site-btn register-btn" type="submit">Save Changes</button>

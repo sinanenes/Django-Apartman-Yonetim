@@ -1,0 +1,114 @@
+{% extends 'homebase.html' %}
+{% load static %}
+{% block title %} User Payments {% endblock %}
+{% block keywords %} {{ setting.keywords }} {% endblock %}
+{% block description %} {{ setting.description }} {% endblock %}
+
+{% block head %}
+<link rel="shortcut icon" type="image/x-icon" href="{{ setting.icon.url }}">
+{% endblock %}
+
+{% block content %}
+<!-- Breadcrumb Section Begin -->
+<div class="breacrumb-section">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="breadcrumb-text">
+                    <a href="/"><i class="fa fa-home"></i>ANA SAYFA</a>
+                    <span>USER PAYMENTS</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Breadcrumb Section Begin -->
+
+<!--section-->
+<div class="section">
+    <!--container-->
+    <div class="container">
+
+        {% if messages %}
+        {% for message in messages %}
+        <div class="alert alert-{{message.tags}}" role="alert">
+            {{ message|safe }}
+        </div>
+        {% endfor %}
+        {% endif %}
+
+        <!--row-->
+        <div class="row">
+            <!--{{setting.contact|safe}}-->
+            <div class="col-md-1">
+                <div class="billing-details">
+                    {% include "user_panel.html" %}
+                </div>
+            </div>
+            <div class="col-md-11">
+                <div class="section-title">
+                    <h3 class="title">User Payments</h3>
+                </div>
+                <!-- Shopping Cart Section Begin -->
+                <section class="shopping-cart spad">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="cart-table">
+                                    <div class="section title">
+                                        <h4 class="title">
+                                            User Payments List
+                                            <a class="primary-btn" href="/user/addpayment">Add Payment</a>
+                                        </h4>
+                                    </div>
+
+                                    <table>
+                                        <thead>
+                                        <tr>
+                                            <th>Year</th>
+                                            <th>Month</th>
+                                            <th>Payment</th>
+                                            <th>Type</th>
+                                            <th>Admin</th>
+                                            <th>Status</th>
+                                            <th>Date</th>
+                                            <th>Detail</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        {% for rs in userpayments %}
+                                        <tr>
+                                            <td><h6>{{rs.year}}</h6></td>
+                                            <td><h6>{{rs.month}}</h6></td>
+                                            <td><h6>{{rs.payment}}</h6></td>
+                                            <td><h6>{{rs.type}}</h6></td>
+                                            <td><h6>{{rs.adminnote}}</h6></td>
+                                            <td><h6>{{rs.status}}</h6></td>
+                                            <td><h6>{{rs.create_at}}</h6></td>
+                                            <td><a class="primary-btn" href="/user/paymentedit/{{rs.id}}">Edit</a></td>
+                                            <td class="close-td first-row">
+                                                <a href="/user/paymentdelete/{{rs.id}}" onclick="return confirm('Delete! Are you sure?')">
+                                                    <i class="ti-close"></i>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                        {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <!-- Shopping Cart Section End -->
+            </div>
+        </div>
+        <!--row-->
+    </div>
+    <!--container-->
+</div>
+<!--section-->
+
+{% endblock %}
+
+

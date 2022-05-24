@@ -8,6 +8,7 @@ from django.shortcuts import render, redirect
 from content.models import Menu, Comment, Content, ContentFormu, ContentImageFormu, Imagen
 from demand.models import Demand, DemandFormu
 from home.models import UserProfile
+from payment.models import Payment, PaymentFormu
 from user.forms import UserUpdateFormu, ProfileUpdateFormu
 
 
@@ -267,3 +268,74 @@ def demanddelete(request, id):
     Demand.objects.filter(id=id, user_id=current_user.id).delete()
     messages.success(request, 'Demand deleted..')
     return HttpResponseRedirect('/user/demands')
+
+
+@login_required(login_url='/login')  # Check login
+def payments(request):
+    menu = Menu.objects.all()
+    current_user = request.user
+    userpayments = Payment.objects.filter(user_id=current_user.id)
+    context = {
+        'menu': menu,
+        'userpayments': userpayments,
+    }
+    return render(request, 'user_payments.html', context)
+
+
+@login_required(login_url='/login')  # Check login
+def addpayment(request):
+    if request.method == 'POST':
+        paymentForm = PaymentFormu(request.POST, request.FILES)
+        if paymentForm.is_valid():
+            current_user = request.user
+            data = Payment()  # model ile baglanti
+            data.user_id = current_user.id
+            data.type = paymentForm.cleaned_data['type']
+            data.year = paymentForm.cleaned_data['year']
+            data.month = paymentForm.cleaned_data['month']
+            data.payment = paymentForm.cleaned_data['payment']
+            data.status = 'Yeni'
+            data.save()  # veri tabanina kaydet
+            messages.success(request, "Your Payment Inserted Successfully!")
+            return HttpResponseRedirect('/user/payments')
+        else:
+            messages.error(request, 'Payment Form Error:' + str(paymentForm.errors))
+            return HttpResponseRedirect('/user/addpayment')
+    else:
+        menu = Menu.objects.all()
+        paymentForm = PaymentFormu()
+        context = {
+            'menu': menu,
+            'paymentForm': paymentForm
+        }
+        return render(request, 'user_addpayment.html', context)
+
+
+@login_required(login_url='/login')  # Check login
+def paymentedit(request, id):
+    payment = Payment.objects.get(id=id)
+    if request.method == 'POST':
+        paymentForm = PaymentFormu(request.POST, request.FILES, instance=payment)
+        if paymentForm.is_valid():
+            paymentForm.save()
+            messages.success(request, "Your Payment Updated Successfully!")
+            return HttpResponseRedirect('/user/payments')
+        else:
+            messages.error(request, 'Payment Form Error:' + str(paymentForm.errors))
+            return HttpResponseRedirect('/user/paymentedit/' + str(id))
+    else:
+        menu = Menu.objects.all()
+        paymentForm = PaymentFormu(instance=payment)
+        context = {
+            'menu': menu,
+            'paymentForm': paymentForm
+        }
+        return render(request, 'user_addpayment.html', context)
+
+
+@login_required(login_url='/login')  # Check login
+def paymentdelete(request, id):
+    current_user = request.user
+    Payment.objects.filter(id=id, user_id=current_user.id).delete()
+    messages.success(request, 'Payment deleted..')
+    return HttpResponseRedirect('/user/payments')

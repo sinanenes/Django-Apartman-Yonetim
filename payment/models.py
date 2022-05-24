@@ -3,7 +3,7 @@ from django.db import models
 
 
 # Create your models here.
-from django.forms import ModelForm
+from django.forms import ModelForm, Select, TextInput
 
 
 class Payment(models.Model):
@@ -30,10 +30,10 @@ class Payment(models.Model):
         ('Aralık', 'Aralık')
     )
     YEAR = (
-        ('2022', '2022'),
-        ('2023', '2023'),
-        ('2024', '2024'),
-        ('2025', '2025')
+        (2022, 2022),
+        (2023, 2023),
+        (2024, 2024),
+        (2025, 2025)
     )
     TYPE = (
         ('EFT', 'EFT'),
@@ -58,3 +58,9 @@ class PaymentFormu(ModelForm):
     class Meta:
         model = Payment
         fields = ['year', 'month', 'type', 'payment']
+        widgets = {
+            'year': Select(attrs={'class': 'input', 'placeholder': 'year'}, choices=Payment.YEAR),
+            'month': Select(attrs={'class': 'input', 'placeholder': 'month'}, choices=Payment.MONTH),
+            'type': Select(attrs={'class': 'input', 'placeholder': 'type'}, choices=Payment.TYPE),
+            'payment': TextInput(attrs={'class': 'input', 'placeholder': 'payment'})
+        }
