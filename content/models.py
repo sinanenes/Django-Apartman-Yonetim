@@ -63,7 +63,8 @@ class Content(models.Model):
         ('Etkinlik', 'Etkinlik'),
         ('Kararlar', 'Kararlar'),
         ('Anket', 'Anket'),
-        ('Yönetim', 'Yönetim')
+        ('Yonetim', 'Yonetim'),
+        ('Sakin', 'Sakin')
     )
 
     user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)

@@ -20,6 +20,7 @@ def index(request):
     randomcontents = Content.objects.filter(status='True').order_by('?')[:4]
     news = Content.objects.filter(type='Haber', status='True').order_by('-id')[:4]
     announcements = Content.objects.filter(type='Duyuru', status='True').order_by('-id')[:4]
+    resident = Content.objects.filter(type='Sakin', status='True').order_by('-id')[:1]
 
     context = {'setting': setting,
                'menu': menu,
@@ -28,7 +29,8 @@ def index(request):
                'lastcontents': lastcontents,
                'randomcontents': randomcontents,
                'news': news,
-               'announcements': announcements
+               'announcements': announcements,
+               'resident': resident
                }
     return render(request, 'index.html', context)
 
