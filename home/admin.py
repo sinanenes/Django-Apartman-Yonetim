@@ -10,7 +10,7 @@ class ContactFormMessageAdmin(admin.ModelAdmin):
 
 
 class UserProfileAdmin(admin.ModelAdmin):
-    list_display = ['user_name', 'phone', 'address', 'city', 'country', 'first_name', 'last_name', 'image_tag']
+    list_display = ['user_name', 'phone', 'address', 'city', 'country', 'first_name', 'last_name', 'image_tag', 'blok', 'daire']
 
 
 class FAQAdmin(admin.ModelAdmin):

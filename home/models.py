@@ -1,5 +1,6 @@
 from ckeditor_uploader.fields import RichTextUploadingField
 from django.contrib.auth.models import User
+from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
 
 # Create your models here.
@@ -73,12 +74,21 @@ class ContactFormu(ModelForm):
 
 
 class UserProfile(models.Model):
+    BLOKLAR = (
+        ('A', 'A'),
+        ('B', 'B'),
+        ('C', 'C'),
+        ('D', 'D')
+    )
+
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     phone = models.CharField(blank=True, max_length=20)
     address = models.CharField(blank=True, max_length=150)
     city = models.CharField(blank=True, max_length=20)
     country = models.CharField(blank=True, max_length=20)
     image = models.ImageField(blank=True, upload_to='images/users/')
+    blok = models.CharField(max_length=150, choices=BLOKLAR)
+    daire = models.IntegerField(validators=[MaxValueValidator(100), MinValueValidator(1)])
 
     def __str__(self):
         return self.user.username
@@ -101,7 +111,7 @@ class UserProfile(models.Model):
 class UserProfileFormu(ModelForm):
     class Meta:
         model = UserProfile
-        fields = ['phone', 'address', 'city', 'country', 'image']
+        fields = ['phone', 'address', 'city', 'country', 'image', 'blok', 'daire']
 
 
 class FAQ(models.Model):
