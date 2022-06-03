@@ -61,7 +61,7 @@ class Content(models.Model):
         ('Haber', 'Haber'),
         ('Duyuru', 'Duyuru'),
         ('Etkinlik', 'Etkinlik'),
-        ('Kararlar', 'Kararlar'),
+        ('Karar', 'Karar'),
         ('Anket', 'Anket'),
         ('Yonetim', 'Yonetim'),
         ('Sakin', 'Sakin')
